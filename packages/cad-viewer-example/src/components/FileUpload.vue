@@ -12,31 +12,31 @@
         <UploadFilled />
       </el-icon>
       <div class="el-upload__text">
-        <h2 class="upload-title">Select CAD File to View</h2>
+        <h2 class="upload-title">Selecione um arquivo CAD para visualizar</h2>
         <p class="upload-description">
-          Drop file here or <em>click to select</em>
+          Arraste o arquivo aqui ou <em>clique para selecionar</em>
         </p>
         <div>
           <el-radio-group v-model="selectedMode" class="mode-radio-group">
-            <el-radio :value="0" border>Read</el-radio>
-            <el-radio :value="4" border>Review</el-radio>
-            <el-radio :value="8" border>Write</el-radio>
+            <el-radio :value="0" border>Ler</el-radio>
+            <el-radio :value="4" border>Revisar</el-radio>
+            <el-radio :value="8" border>Escrever</el-radio>
           </el-radio-group>
           <div class="mode-description">
             <p v-if="selectedMode === 0" class="mode-info">
-              <strong>Read:</strong> View-only access
+              <strong>Read:</strong> Apenas leitura
             </p>
             <p v-else-if="selectedMode === 4" class="mode-info">
-              <strong>Review:</strong> View and review access
+              <strong>Review:</strong> Visualizar e revisar
             </p>
             <p v-else-if="selectedMode === 8" class="mode-info">
-              <strong>Write:</strong> Full read/write access
+              <strong>Write:</strong> Acesso total de leitura/escrita
             </p>
           </div>
         </div>
       </div>
       <template #tip>
-        <div class="el-upload__tip">Supported formats: DWG, DXF</div>
+        <div class="el-upload__tip">Formatos suportados: DWG, DXF</div>
       </template>
     </el-upload>
   </div>
@@ -68,7 +68,7 @@ const handleFileChange: UploadProps['onChange'] = (uploadFile: UploadFile) => {
 
 const beforeUpload: UploadProps['beforeUpload'] = (rawFile: File) => {
   if (!isValidFile(rawFile)) {
-    log.warn('Invalid file type. Please upload DWG or DXF files.')
+    log.warn('Formato de arquivo inválido. Por favor, selecione arquivos DWG ou DXF.')
     return false
   }
   return true

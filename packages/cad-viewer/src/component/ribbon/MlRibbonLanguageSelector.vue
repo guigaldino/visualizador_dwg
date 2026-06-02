@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<Props>(), {
 const { effectiveLocale, setLocale } = useLocale(props.currentLocale)
 
 const language = computed<AcApLocale>({
-  get: () => (effectiveLocale.value === 'zh' ? 'zh' : 'en'),
+  get: () => effectiveLocale.value,
   set: value => {
     if (isSupportedLocale(value)) {
       setLocale(value)
