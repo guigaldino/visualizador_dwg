@@ -169,6 +169,7 @@ function onViewerCreate() {
   position: relative;
   overflow: hidden;
   background: var(--bg);
+  transform: translateZ(0);
 }
 
 .ecm-cad-viewer {
