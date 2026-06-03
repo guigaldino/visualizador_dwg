@@ -24,7 +24,7 @@
         <MlCadViewer
           v-if="viewerFile"
           :key="viewerKey"
-          locale="en"
+          locale="pt"
           :local-file="viewerFile"
           :mode="openMode"
           base-url="https://cdn.jsdelivr.net/gh/mlightcad/cad-data@main/"

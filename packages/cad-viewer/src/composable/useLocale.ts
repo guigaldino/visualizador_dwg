@@ -42,7 +42,7 @@ export function useLocale(propLocale?: LocaleProp) {
   const currentLocale = ref<AcApLocale>(getInitialLocale())
 
   // Effective locale - always return the current active locale
-  const effectiveLocale = computed<LocaleProp>(() => {
+  const effectiveLocale = computed<AcApLocale>(() => {
     return currentLocale.value
   })
 
