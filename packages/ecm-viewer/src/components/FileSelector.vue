@@ -102,7 +102,7 @@ function select(file: DwgFile) {
   min-width: 20px;
   height: 20px;
   padding: 0 6px;
-  background: linear-gradient(135deg, #1a6fad, #38b2d8);
+  background: linear-gradient(135deg, #38b2d8, #42bde3);
   color: #ffffff;
   font-size: 11px;
   font-weight: 700;
@@ -139,20 +139,20 @@ function select(file: DwgFile) {
 
 .file-card:hover {
   background: #edf6fa;
-  border-color: rgba(56, 178, 216, 0.3);
+  border-color: rgba(66, 189, 227, 0.4);
   box-shadow: 0 4px 12px rgba(18, 50, 64, 0.08);
   transform: translateY(-1px);
 }
 
 .file-card:focus-visible {
-  border-color: #38b2d8;
-  box-shadow: 0 0 0 3px rgba(56, 178, 216, 0.25);
+  border-color: #42bde3;
+  box-shadow: 0 0 0 3px rgba(66, 189, 227, 0.25);
 }
 
 .file-card--selected {
   background: #eef9fb;
-  border-color: #38b2d8;
-  box-shadow: 0 4px 16px rgba(56, 178, 216, 0.18);
+  border-color: #42bde3;
+  box-shadow: 0 4px 16px rgba(66, 189, 227, 0.22);
 }
 
 .file-card--selected:hover {
@@ -171,11 +171,11 @@ function select(file: DwgFile) {
 .file-card__icon {
   width: 30px;
   height: 36px;
-  color: #1a6fad;
+  color: #38b2d8;
 }
 
 .file-card--selected .file-card__icon {
-  color: #38b2d8;
+  color: #42bde3;
 }
 
 .file-card__info {
@@ -205,9 +205,9 @@ function select(file: DwgFile) {
 .file-card__type {
   font-size: 10px;
   font-weight: 700;
-  color: #1a6fad;
-  background: rgba(26, 111, 173, 0.08);
-  border: 1px solid rgba(26, 111, 173, 0.15);
+  color: #38b2d8;
+  background: rgba(56, 178, 216, 0.1);
+  border: 1px solid rgba(56, 178, 216, 0.2);
   border-radius: 4px;
   padding: 1px 5px;
   letter-spacing: 0.4px;
@@ -215,9 +215,9 @@ function select(file: DwgFile) {
 }
 
 .file-card--selected .file-card__type {
-  color: #38b2d8;
-  background: rgba(56, 178, 216, 0.1);
-  border-color: rgba(56, 178, 216, 0.25);
+  color: #42bde3;
+  background: rgba(66, 189, 227, 0.12);
+  border-color: rgba(66, 189, 227, 0.3);
 }
 
 .file-card__size {
@@ -233,7 +233,7 @@ function select(file: DwgFile) {
 }
 
 .file-card--selected .file-card__indicator {
-  color: #38b2d8;
+  color: #42bde3;
 }
 
 .file-card__chevron {

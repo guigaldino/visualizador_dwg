@@ -10,7 +10,7 @@
           </svg>
         </div>
         <div class="app-header__title-group">
-          <span class="app-header__title">Visualizador de Documentos</span>
+          <span class="app-header__title">Visualizador de Documentos DWG</span>
           <span class="app-header__subtitle">ECM · Modo leitura</span>
         </div>
       </div>
@@ -39,7 +39,7 @@ const { docVersaoId, isValid } = useDocVersaoId()
 
 <style scoped>
 .app-header {
-  background: linear-gradient(135deg, #1b447a 0%, #245697 55%, #337ab7 100%);
+  background: linear-gradient(135deg, #217ebd 0%, #38b2d8 55%, #42bde3 100%);
   height: 60px;
   flex-shrink: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
