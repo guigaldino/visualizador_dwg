@@ -93,7 +93,7 @@ export class AcApDocument {
    */
   async openDocument(
     fileName: string,
-    content: ArrayBuffer,
+    content: string | ArrayBuffer,
     options: AcApOpenDatabaseOptions
   ) {
     let isSuccess = true
@@ -107,7 +107,7 @@ export class AcApDocument {
         readOnly: this._openMode === AcEdOpenMode.Read
       }
       await this._database.read(
-        content,
+        content as ArrayBuffer,
         baseOptions,
         fileExtension == 'dwg' ? AcDbFileType.DWG : AcDbFileType.DXF
       )

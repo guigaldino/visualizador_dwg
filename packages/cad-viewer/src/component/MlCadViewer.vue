@@ -267,7 +267,7 @@ const endPendingOpen = () => {
  * @param fileName - Name of the uploaded file
  * @param fileContent - File content as string (DXF) or ArrayBuffer (DWG)
  */
-const handleFileRead = async (fileName: string, fileContent: ArrayBuffer) => {
+const handleFileRead = async (fileName: string, fileContent: string | ArrayBuffer) => {
   const options: AcApOpenDatabaseOptions = {
     minimumChunkSize: 1000,
     mode: props.mode
@@ -277,7 +277,7 @@ const handleFileRead = async (fileName: string, fileContent: ArrayBuffer) => {
   try {
     const success = await AcApDocManager.instance.openDocument(
       fileName,
-      fileContent,
+      fileContent as unknown as ArrayBuffer,
       options
     )
     if (!success) {
