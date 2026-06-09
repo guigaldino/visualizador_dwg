@@ -10,12 +10,12 @@
     </el-icon>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item command="QNew">{{
+        <!-- <el-dropdown-item command="QNew">{{
           t('main.mainMenu.new')
-        }}</el-dropdown-item>
-        <el-dropdown-item command="Open">{{
+        }}</el-dropdown-item> -->
+        <!-- <el-dropdown-item command="Open">{{
           t('main.mainMenu.open')
-        }}</el-dropdown-item>
+        }}</el-dropdown-item> -->
         <el-dropdown-item command="Convert">{{
           t('main.mainMenu.export')
         }}</el-dropdown-item>

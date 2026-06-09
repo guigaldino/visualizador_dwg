@@ -3,12 +3,18 @@ import { fileURLToPath } from 'url'
 import { defineConfig } from 'vite'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import vue from '@vitejs/plugin-vue'
+import svgLoader from 'vite-svg-loader'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig(({ command }) => {
   return {
     base: './',
+    resolve: {
+      alias: {
+        '@mlightcad/cad-viewer': resolve(__dirname, '../cad-viewer/src/index.ts')
+      }
+    },
     optimizeDeps: {
       force: command === 'serve'
     },
@@ -24,6 +30,7 @@ export default defineConfig(({ command }) => {
     },
     plugins: [
       vue(),
+      svgLoader(),
       viteStaticCopy({
         targets: [
           {
