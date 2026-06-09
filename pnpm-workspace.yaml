@@ -6,3 +6,5 @@ allowBuilds:
   nx: true
   unrs-resolver: true
   vue-demi: true
+patchedDependencies:
+  '@mlightcad/mtext-renderer@0.10.15': patches/@mlightcad__mtext-renderer@0.10.15.patch

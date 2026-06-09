@@ -1,0 +1,19 @@
+diff --git a/dist/index.js b/dist/index.js
+index 10e65e42dff392584fe2a47d2ded85d86d165a2c..e3dda90c6c33a7dd33338294081d1f8a70604156 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -24851,8 +24851,12 @@ class nf {
+       ...e.filter((p) => !(p instanceof R.ShapeGeometry))
+     ];
+     if (l.length > 0) {
+-      const p = l.length > 1 ? Sa(l) : l[0], x = new R.LineSegments(p, u);
+-      x.userData.bboxIntersectionCheck = !0, x.userData.charBoxType = i, h && a.length > 0 && (x.userData.layout = { chars: a.slice() }), s.add(x);
++      const nl = l.map((p) => p.index ? p.toNonIndexed() : p);
++      const p = nl.length > 1 ? Sa(nl) : nl[0];
++      if (p != null) {
++        const x = new R.LineSegments(p, u);
++        x.userData.bboxIntersectionCheck = !0, x.userData.charBoxType = i, h && a.length > 0 && (x.userData.layout = { chars: a.slice() }), s.add(x);
++      }
+     }
+     return s.children.length === 1 ? s.children[0] : s;
+   }
