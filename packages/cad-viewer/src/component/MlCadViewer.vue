@@ -584,10 +584,10 @@ const closeNotificationCenter = () => {
             :current-locale="effectiveLocale"
           />
           <ml-main-menu v-if="!isWriteMode" />
-          <ml-language-selector
+          <!-- <ml-language-selector
             v-if="!isWriteMode"
             :current-locale="effectiveLocale"
-          />
+          /> -->
         </header>
 
         <!-- Main content area with CAD viewing tools and controls -->
