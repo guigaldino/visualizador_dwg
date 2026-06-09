@@ -29,15 +29,15 @@
           >{{ posText }}</el-button
         >
         <ml-warning-button />
-        <ml-notification-button @click="toggleNotificationCenter" />
+        <!-- <ml-notification-button @click="toggleNotificationCenter" /> -->
         <ml-theme-button
           :is-dark="props.isDark"
           :toggle-dark="props.toggleDark"
         />
-        <ml-full-screen-button />
+        <!-- <ml-full-screen-button /> -->
         <ml-point-style-button />
         <ml-osnap-button />
-        <ml-sys-var-toggle-button
+        <!-- <ml-sys-var-toggle-button
           :sys-var-name="AcDbSystemVariables.LWDISPLAY"
           :on-icon="lineWidth"
           :off-icon="lineWidth"
@@ -45,7 +45,7 @@
           :off-tooltip="t('main.statusBar.lineWidth.off')"
           on-color="var(--el-color-primary)"
           off-color="var(--el-text-color-regular)"
-        />
+        /> -->
         <ml-sys-var-toggle-button
           :sys-var-name="AcDbSystemVariables.DYNMODE"
           :on-icon="dynamicInput"
@@ -56,7 +56,7 @@
           off-color="var(--el-text-color-regular)"
           remember-last-enabled
         />
-        <ml-setting-button />
+        <!-- <ml-setting-button /> -->
       </el-button-group>
     </template>
   </ml-status-bar>
