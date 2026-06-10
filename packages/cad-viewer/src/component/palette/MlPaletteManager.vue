@@ -1,25 +1,28 @@
 <template>
   <el-config-provider :size="'small'">
-    <ml-tool-palette
-      class="ml-layer-manager"
-      :style="paletteStyle"
-      v-model="store.dialogs.layerManager"
-      v-model:active-tab="store.dialogs.activePaletteTab"
-      :tabs="tabs"
-      :left-offset="paletteOffsets.left"
-      :right-offset="paletteOffsets.right"
-      :top-offset="paletteOffsets.top"
-      :bottom-offset="paletteOffsets.bottom"
-    >
-      <template #tab-layerManager>
-        <div class="ml-layer-list-wrapper">
-          <ml-layer-list :editor="props.editor" />
-        </div>
-      </template>
-      <template #tab-entityProperties>
-        <ml-entity-properties :entity-props-list="properties" />
-      </template>
-    </ml-tool-palette>
+    <Teleport to="body">
+      <ml-tool-palette
+        class="ml-layer-manager"
+        :style="paletteStyle"
+        v-model="store.dialogs.layerManager"
+        v-model:active-tab="store.dialogs.activePaletteTab"
+        :tabs="tabs"
+        :left-offset="paletteOffsets.left"
+        :right-offset="paletteOffsets.right"
+        :top-offset="paletteOffsets.top"
+        :bottom-offset="paletteOffsets.bottom"
+        @mousedown.capture="handleMouseDown"
+      >
+        <template #tab-layerManager>
+          <div class="ml-layer-list-wrapper">
+            <ml-layer-list :editor="props.editor" />
+          </div>
+        </template>
+        <template #tab-entityProperties>
+          <ml-entity-properties :entity-props-list="properties" />
+        </template>
+      </ml-tool-palette>
+    </Teleport>
   </el-config-provider>
 </template>
 
@@ -48,6 +51,13 @@ interface Props {
 
 const props = defineProps<Props>()
 const containerRect = useViewerRect()
+
+const handleMouseDown = (e: MouseEvent) => {
+  const target = e.target as HTMLElement
+  if (target && target.closest('.ml-tool-palette-dialog-icon')) {
+    e.stopPropagation()
+  }
+}
 
 const DEFAULT_WIDTH = 400
 const DEFAULT_HEIGHT = 500

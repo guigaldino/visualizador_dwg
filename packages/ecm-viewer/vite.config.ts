@@ -12,7 +12,8 @@ export default defineConfig(({ command }) => {
     base: './',
     resolve: {
       alias: {
-        '@mlightcad/cad-viewer': resolve(__dirname, '../cad-viewer/src/index.ts')
+        '@mlightcad/cad-viewer': resolve(__dirname, '../cad-viewer/src/index.ts'),
+        '@mlightcad/cad-simple-viewer': resolve(__dirname, '../cad-simple-viewer/src/index.ts')
       }
     },
     optimizeDeps: {
