@@ -155,19 +155,33 @@ export class AcApI18n {
    * @returns translated string or fallback/key if not found
    */
   public static t(key: string, options?: AcApTranslateOptions): string {
-    const locale = this._currentLocale
-    const root = this._messages[locale]
-    const parts = key.split('.')
-    let cur = root
-
-    for (const part of parts) {
-      if (!cur || typeof cur !== 'object') {
-        return options?.fallback ?? key
-      }
-      cur = cur[part] as AcApLocaleMessage
+    const localesToTry = [this._currentLocale]
+    if (this._currentLocale !== 'en') {
+      localesToTry.push('en')
     }
 
-    return typeof cur === 'string' ? cur : (options?.fallback ?? key)
+    for (const locale of localesToTry) {
+      const root = this._messages[locale]
+      if (!root) continue
+
+      const parts = key.split('.')
+      let cur: any = root
+      let found = true
+
+      for (const part of parts) {
+        if (!cur || typeof cur !== 'object' || cur[part] === undefined) {
+          found = false
+          break
+        }
+        cur = cur[part]
+      }
+
+      if (found && typeof cur === 'string') {
+        return cur
+      }
+    }
+
+    return options?.fallback ?? key
   }
 
   /**
