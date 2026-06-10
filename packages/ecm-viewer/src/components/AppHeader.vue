@@ -11,7 +11,6 @@
         </div>
         <div class="app-header__title-group">
           <span class="app-header__title">Visualizador de Documentos DWG</span>
-          <span class="app-header__subtitle">ECM · Modo leitura</span>
         </div>
       </div>
 
@@ -20,12 +19,14 @@
           <span class="app-header__badge-label">Versão</span>
           <span class="app-header__badge-value">{{ docVersaoId }}</span>
         </div>
+        
         <div class="app-header__readonly-tag">
           <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
             <path d="M8 1a5 5 0 0 1 5 5v1h1a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h1V6a5 5 0 0 1 5-5zm0 1.5A3.5 3.5 0 0 0 4.5 6v1h7V6A3.5 3.5 0 0 0 8 2.5zM8 10a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
           </svg>
           Somente leitura
         </div>
+
       </div>
     </div>
   </header>
