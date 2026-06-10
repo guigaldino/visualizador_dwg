@@ -1,3 +1,4 @@
+import { AcDbRenderingCache } from '@mlightcad/data-model'
 import type { AcApContext } from '@mlightcad/cad-simple-viewer'
 import { AcApSettingManager } from '@mlightcad/cad-simple-viewer'
 import { AcSvgRenderer } from '@mlightcad/svg-renderer'
@@ -25,8 +26,14 @@ export class AcApPdfConvertor {
     const renderer = new AcSvgRenderer()
     this.configureRenderer(renderer, context)
 
-    for (const entity of entities) {
-      entity.worldDraw(renderer)
+    AcDbRenderingCache.instance.clear()
+
+    try {
+      for (const entity of entities) {
+        entity.worldDraw(renderer)
+      }
+    } finally {
+      AcDbRenderingCache.instance.clear()
     }
     return renderer.exportAsync()
   }

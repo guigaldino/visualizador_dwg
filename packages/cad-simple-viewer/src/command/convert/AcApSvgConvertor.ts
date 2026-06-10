@@ -1,3 +1,4 @@
+import { AcDbRenderingCache } from '@mlightcad/data-model'
 import { AcSvgRenderer } from '@mlightcad/svg-renderer'
 
 import { AcApDocManager } from '../../app'
@@ -19,9 +20,15 @@ export class AcApSvgConvertor {
     const renderer = new AcSvgRenderer()
     this.configureRenderer(renderer)
 
-    const entities = doc.database.tables.blockTable.modelSpace.newIterator()
-    for (const entity of entities) {
-      entity.worldDraw(renderer)
+    AcDbRenderingCache.instance.clear()
+
+    try {
+      const entities = doc.database.tables.blockTable.modelSpace.newIterator()
+      for (const entity of entities) {
+        entity.worldDraw(renderer)
+      }
+    } finally {
+      AcDbRenderingCache.instance.clear()
     }
 
     const svgContent = await renderer.exportAsync()

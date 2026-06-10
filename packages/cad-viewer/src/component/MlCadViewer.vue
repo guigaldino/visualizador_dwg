@@ -583,7 +583,7 @@ const closeNotificationCenter = () => {
             v-if="isWriteMode"
             :current-locale="effectiveLocale"
           />
-          <ml-main-menu v-if="!isWriteMode" />
+          <!-- <ml-main-menu v-if="!isWriteMode" /> -->
           <!-- <ml-language-selector
             v-if="!isWriteMode"
             :current-locale="effectiveLocale"

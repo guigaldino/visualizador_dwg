@@ -6,9 +6,12 @@ import { AcSvgEntity } from './AcSvgEntity'
 export class AcSvgGroup extends AcSvgEntity {
   constructor(entities: AcSvgEntity[]) {
     super()
-    const inner = entities.map(e => e.renderSvg()).filter(Boolean).join('\n')
+    const validEntities = (entities || []).filter(
+      e => e && typeof e.renderSvg === 'function'
+    )
+    const inner = validEntities.map(e => e.renderSvg()).filter(Boolean).join('\n')
     this._localSvg = inner
-    for (const e of entities) {
+    for (const e of validEntities) {
       this._box.union(e.box)
     }
   }
