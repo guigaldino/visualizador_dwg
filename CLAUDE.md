@@ -36,6 +36,10 @@ This is a pnpm workspace monorepo with ~10 packages in `/packages`. Key packages
 - **@mlightcad/three-renderer** (private): THREE.js rendering engine with shader materials, geometry batching, hatch patterns.
 - **@mlightcad/svg-renderer** (private): SVG export renderer.
 
+### ECM Integration
+
+- **@mlightcad/ecm-viewer** (`packages/ecm-viewer`): Standalone document viewer package for ECM (Enterprise Content Management) systems. Independent package in the monorepo, intended for integration with DMS/ECM platforms. Extends the viewer capabilities for enterprise document management workflows.
+
 ### Examples & Tools
 
 - **@mlightcad/cad-viewer-example**: Full Vue 3 demo app showcasing cad-viewer.
