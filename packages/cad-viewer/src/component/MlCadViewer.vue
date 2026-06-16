@@ -112,8 +112,6 @@ import { MlDialogManager, MlFileReader } from './common'
 import {
   MlEntityDrawStyleToolbar,
   MlEntityInfo,
-  MlLanguageSelector,
-  MlMainMenu,
   MlToolBars
 } from './layout'
 import { MlNotificationCenter } from './notification'

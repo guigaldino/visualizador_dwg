@@ -81,14 +81,11 @@ import {
   useLayouts,
   useSettings
 } from '../../composable'
-import { dynamicInput, lineWidth } from '../../svg'
+import { dynamicInput } from '../../svg'
 import { MlSysVarToggleButton } from '../common'
-import MlFullScreenButton from './MlFullScreenButton.vue'
-import MlNotificationButton from './MlNotificationButton.vue'
 import MlOsnapButton from './MlOsnapButton.vue'
 import MlPointStyleButton from './MlPointStyleButton.vue'
 import MlProgress from './MlProgress.vue'
-import MlSettingButton from './MlSettingButton.vue'
 import MlThemeButton from './MlThemeButton.vue'
 import MlWarningButton from './MlWarningButton.vue'
 
@@ -116,10 +113,10 @@ const emit = defineEmits<{
   toggleNotificationCenter: []
 }>()
 
-const toggleNotificationCenter = () => {
-  if (isStatusBarDisabled.value) return
-  emit('toggleNotificationCenter')
-}
+// const toggleNotificationCenter = () => {
+//   if (isStatusBarDisabled.value) return
+//   emit('toggleNotificationCenter')
+// }
 </script>
 
 <style scoped>
