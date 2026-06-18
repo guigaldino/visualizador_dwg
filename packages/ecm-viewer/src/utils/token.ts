@@ -5,7 +5,7 @@ export interface DadosToken {
     tokenSistema: string,
     urlOrigem: string,
     UserId: string,
-    TempoExpiracao: String
+    TempoExpiracao: string
 };
 
 const CHAVE_CRIPTO = import.meta.env.VITE_TOKEN_SECRET;
