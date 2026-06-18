@@ -33,86 +33,94 @@ export const router = createRouter({
   routes: rotas
 })
 
-router.beforeEach((to, from, next) => {
-  debugger
+router.beforeEach((to, from) => {
   const storeEcm = usarStoreEcm()
-  const tokenQuery = to.query.t as string | undefined // Lê parâmetro '?t='
+
+  let tokenQuery = to.query.t as string | undefined
+
+  if (!tokenQuery) {
+    const params = new URLSearchParams(window.location.search)
+    tokenQuery = params.get('t') || undefined
+  }
 
   if (tokenQuery) {
     if (tokenJaProcessado(tokenQuery)) {
-      next({ path: '/', query: {} }) // Limpa query string do navegador
-      return
+      if (window.location.search) {
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname + window.location.hash
+        )
+      }
+      return { path: '/', query: {} }
+    }
+
+    setTokenComoProcessado(tokenQuery)
+    if (window.location.search) {
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname + window.location.hash
+      )
     }
 
     const payload = descriptografarToken(tokenQuery)
     if (!payload) {
-      next({
+      return {
         name: 'erro',
         query: {
           titulo: 'Token Inválido',
           mensagem: 'Não foi possível ler as credenciais do token.'
         }
-      })
-      return
+      }
     }
 
     if (estaExpirado(payload.TempoExpiracao)) {
-      next({
+      return {
         name: 'erro',
         query: {
           titulo: 'Token Expirado',
           mensagem: `O link de acesso expirou em ${new Date(payload.TempoExpiracao).toLocaleString()}.`
         }
-      })
-      return
+      }
     }
 
     if (!origemApiValida(payload.urlOrigem)) {
-      next({
+      return {
         name: 'erro',
         query: {
           titulo: 'Domínio Não Autorizado',
           mensagem: 'A URL de API contida no token não é confiável.'
         }
-      })
-      return
+      }
     }
 
     if (!referrerValido(document.referrer)) {
-      next({
+      return {
         name: 'erro',
         query: {
           titulo: 'Referrer Não Autorizado',
           mensagem: 'A origem de navegação não é permitida.'
         }
-      })
-      return
+      }
     }
 
-    // Salva na store global do Pinia
     storeEcm.definirContexto(payload)
-    setTokenComoProcessado(tokenQuery)
-
-    next({ path: '/', query: {} }) // Redireciona limpando a query do navegador
-    return
   }
 
   if (to.name === 'erro') {
-    next()
-    return
+    return true
   }
 
-  // Se o usuário não tem contexto ativo na store, impede de ver o visualizador
   if (!storeEcm.estaAutenticado) {
-    next({
+    return {
       name: 'erro',
       query: {
         titulo: 'Autenticação Requerida',
         mensagem: 'É necessário um token ativo para visualizar os documentos.'
       }
-    })
-    return
+    }
   }
 
-  next()
+  return true
 })
