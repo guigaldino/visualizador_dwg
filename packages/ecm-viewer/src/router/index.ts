@@ -34,6 +34,7 @@ export const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  debugger
   const storeEcm = usarStoreEcm()
   const tokenQuery = to.query.t as string | undefined // Lê parâmetro '?t='
 

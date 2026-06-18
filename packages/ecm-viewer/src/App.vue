@@ -1,11 +1,8 @@
 <template>
-  <EcmViewerPage />
+  <router-view />
 </template>
-
 <script setup lang="ts">
-import EcmViewerPage from './pages/EcmViewerPage.vue'
 </script>
-
 <style>
 *,
 *::before,
@@ -14,7 +11,6 @@ import EcmViewerPage from './pages/EcmViewerPage.vue'
   margin: 0;
   padding: 0;
 }
-
 html,
 body,
 #app {
