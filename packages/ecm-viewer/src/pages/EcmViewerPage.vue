@@ -20,8 +20,6 @@ const chaveVisualizador = ref(0)
 const carregando = ref(false)
 
 onMounted(async () => {
- console.log("Iniciou")
- console.log(storeEcm.documentoId)
  const anexosDwg = await obterAnexosDwg();
  console.log(anexosDwg)
 })

@@ -11,7 +11,6 @@ export interface AnexoEcm {
  * Consome a lista de anexos associada ao documento do ECM
  */
 export async function obterAnexos(urlOrigem: string, tokenSistema: string, documentoId: string): Promise<AnexoEcm[]> {
-  debugger;
   const resposta = await fetch(`${urlOrigem}/api/v2/documentos/${documentoId}/anexos`, {
     headers: {
       'Authorization': `Bearer ${tokenSistema}`,
@@ -24,5 +23,20 @@ export async function obterAnexos(urlOrigem: string, tokenSistema: string, docum
   }
 
   return resposta.json();
+}
+
+export async function downloadAnexo(urlOrigem: string, tokenSistema: string, anexoId: string) {
+  const resposta = await fetch(`${urlOrigem}/api/v2/anexos/${anexoId}/path`, {
+    headers: {
+      'Authorization': `Bearer ${tokenSistema}`,
+      'Accept': 'application/json'
+    }
+  });
+
+  if (!resposta.ok) {
+    throw new Error(`Falha ao baixar anexo: ${resposta.statusText}`);
+  }
+
+  return resposta.blob();
 }
 
