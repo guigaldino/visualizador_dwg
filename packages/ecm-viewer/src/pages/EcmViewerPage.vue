@@ -9,7 +9,7 @@ import AppHeader from '../components/AppHeader.vue'
 import EmptyState from '../components/EmptyState.vue'
 import FileSelector from '../components/FileSelector.vue'
 import { usarStoreEcm } from '../store/ecm'
-import { listarAnexos, baixarAnexo, type AnexoEcm } from '../services/ecm-api'
+import { obterAnexos, type AnexoEcm } from '../services/ecm-api'
 
 
 const openMode = AcEdOpenMode.Read
@@ -21,7 +21,15 @@ const carregando = ref(false)
 
 onMounted(async () => {
  console.log("Iniciou")
+ console.log(storeEcm.documentoId)
+ const anexosDwg = await obterAnexosDwg();
+ console.log(anexosDwg)
 })
+
+async function obterAnexosDwg(): Promise<AnexoEcm[]> {
+  const anexos = await obterAnexos(storeEcm.urlOrigem!, storeEcm.tokenSistema!, storeEcm.documentoId!);
+  return anexos.filter(anexo => anexo.nomeInterno.toUpperCase().includes('DWG'))
+}
 
 </script>
 

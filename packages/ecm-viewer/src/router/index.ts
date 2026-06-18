@@ -106,6 +106,7 @@ router.beforeEach((to, from) => {
     }
 
     storeEcm.definirContexto(payload)
+    return { path: '/', query: {} }
   }
 
   if (to.name === 'erro') {
