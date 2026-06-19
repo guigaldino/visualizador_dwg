@@ -1,5 +1,3 @@
-import { de } from "element-plus/es/locale/index.mjs";
-
 export interface AnexoEcm {
   id: string;
   nomeInterno: string;

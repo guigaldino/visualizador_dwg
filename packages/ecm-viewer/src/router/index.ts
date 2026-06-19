@@ -33,7 +33,7 @@ export const router = createRouter({
   routes: rotas
 })
 
-router.beforeEach((to, from) => {
+router.beforeEach((to) => {
   const storeEcm = usarStoreEcm()
 
   let tokenQuery = to.query.t as string | undefined
