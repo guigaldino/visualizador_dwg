@@ -37,6 +37,6 @@ export async function downloadAnexo(urlOrigem: string, tokenSistema: string, ane
     throw new Error(`Falha ao baixar anexo: ${resposta.statusText}`);
   }
 
-  return resposta.blob();
+  return resposta.json();
 }
 
