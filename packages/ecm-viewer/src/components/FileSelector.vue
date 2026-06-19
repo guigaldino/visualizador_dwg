@@ -28,7 +28,7 @@
         </div>
 
         <div class="file-card__info">
-          <span class="file-card__name">{{ file.name }}</span>
+          <span class="file-card__name" :title="file.name">{{ file.name }}</span>
           <div class="file-card__meta">
             <span class="file-card__type">DWG</span>
             <span v-if="file.size" class="file-card__size">{{ file.size }}</span>
@@ -190,9 +190,12 @@ function select(file: DwgFile) {
   font-size: 13px;
   font-weight: 600;
   color: #1d2b3d;
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  word-break: break-word;
   line-height: 1.3;
 }
 

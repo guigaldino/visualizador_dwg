@@ -91,6 +91,14 @@ onMounted(async () => {
   }
 })
 
+function formatarTamanho(tamanhoBytes: string | number): string {
+  const bytes = typeof tamanhoBytes === 'string' ? parseInt(tamanhoBytes, 10) : tamanhoBytes
+  if (isNaN(bytes) || bytes <= 0) return '0 B'
+  const unidades = ['B', 'KB', 'MB', 'GB', 'TB']
+  const i = Math.floor(Math.log(bytes) / Math.log(1024))
+  return `${parseFloat((bytes / Math.pow(1024, i)).toFixed(2))} ${unidades[i]}`
+}
+
 async function obterAnexosDwg(): Promise<DwgFile[]> {
   const anexos = await obterAnexos(storeEcm.urlOrigem!, storeEcm.tokenSistema!, storeEcm.documentoId!)
   return anexos
@@ -99,7 +107,7 @@ async function obterAnexosDwg(): Promise<DwgFile[]> {
       id: anexo.id,
       name: anexo.nomeOriginal,
       filename: anexo.nomeInterno,
-      size: anexo.tamanho,
+      size: formatarTamanho(anexo.tamanho),
       url: '' // Opcional, usado apenas pelo tipo genérico do componente
     }))
 }
