@@ -112,8 +112,27 @@ async function obterAnexosDwg(): Promise<DwgFile[]> {
     }))
 }
 
-function selecionarArquivo(arquivo: DwgFile) {
-  alert(`Anexo selecionado:\nNome: ${arquivo.name}\nID: ${arquivo.id}\nTamanho: ${arquivo.size || 'Desconhecido'}`)
+async function selecionarArquivo(arquivo: DwgFile) {
+  if (carregando.value) return
+  carregando.value = true
+  arquivoVisualizador.value = null
+  
+  try {
+    debugger;
+    const urlTeste = "https://saogotardo_dev.silodev.com.br/temp/5/PROJETOWELLIGTONACRESCIMOVARANDAS66b7b50315594520b1b6d84c9adf6c28-61f0c.dwg"
+    const resposta = await fetch(urlTeste)
+    if (!resposta.ok) {
+      throw new Error(`Falha no download de teste: ${resposta.statusText}`)
+    }
+    const blob = await resposta.blob()
+    arquivoVisualizador.value = new File([blob], arquivo.name, { type: 'application/octet-stream' })
+    chaveVisualizador.value += 1
+  } catch (erro) {
+    console.error('Erro no download de teste:', erro)
+    alert('Erro de CORS ou rede ao baixar o arquivo. Veja o console do navegador para detalhes.')
+  } finally {
+    carregando.value = false
+  }
 }
 
 function aoCriarVisualizador() {
