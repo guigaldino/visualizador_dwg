@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EcmProxyTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b6b0af2e54a4856a1eead39ab79d1a2d9d5cd58")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+05106499af59882378a968dfaada6d186e613db5")]
 [assembly: System.Reflection.AssemblyProductAttribute("EcmProxyTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EcmProxyTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
