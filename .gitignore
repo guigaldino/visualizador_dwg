@@ -5,7 +5,6 @@
 .env.production
 
 # compiled output
-docs
 dist
 dist-runner
 lib
@@ -50,3 +49,10 @@ Thumbs.db
 
 .nx/cache
 .nx/workspace-data
+
+# .NET / C#
+services/*/bin/
+services/*/obj/
+services/**/*.user
+services/**/appsettings.Development.json
+services/**/.vs/

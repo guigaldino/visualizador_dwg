@@ -10,6 +10,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 export default defineConfig(({ command }) => {
   return {
     base: './',
+    server: {
+      proxy: {
+        '/api/proxy': 'http://localhost:5000'
+      }
+    },
     resolve: {
       alias: {
         '@mlightcad/cad-viewer': resolve(__dirname, '../cad-viewer/src/index.ts'),

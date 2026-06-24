@@ -1,0 +1,204 @@
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-mono,"Courier New",monospace)}
+.explorer{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden;min-height:480px}
+.tree-panel{background:var(--color-background-secondary);padding:1rem;border-right:0.5px solid var(--color-border-tertiary);overflow-y:auto}
+.detail-panel{background:var(--color-background-primary);padding:1.25rem;display:flex;flex-direction:column;gap:12px}
+.tree-item{display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:6px;cursor:pointer;font-size:12.5px;color:var(--color-text-secondary);transition:background .15s;user-select:none;white-space:nowrap}
+.tree-item:hover{background:var(--color-background-primary);color:var(--color-text-primary)}
+.tree-item.active{background:var(--color-background-info);color:var(--color-text-info)}
+.tree-item .icon{font-size:14px;flex-shrink:0}
+.tree-item .name{font-weight:500}
+.tree-item .badge{margin-left:auto;font-size:10px;padding:1px 6px;border-radius:4px;font-family:var(--font-sans);flex-shrink:0}
+.badge-layer{background:var(--color-background-warning);color:var(--color-text-warning)}
+.badge-cross{background:var(--color-background-success);color:var(--color-text-success)}
+.indent-1{padding-left:20px}
+.indent-2{padding-left:36px}
+.indent-3{padding-left:52px}
+.detail-title{font-size:15px;font-weight:500;color:var(--color-text-primary);font-family:var(--font-sans);display:flex;align-items:center;gap:8px}
+.detail-subtitle{font-size:12px;color:var(--color-text-secondary);font-family:var(--font-mono)}
+.detail-desc{font-size:13px;color:var(--color-text-secondary);font-family:var(--font-sans);line-height:1.6}
+.detail-files{display:flex;flex-direction:column;gap:4px}
+.file-chip{font-size:11.5px;padding:4px 10px;border-radius:6px;background:var(--color-background-secondary);color:var(--color-text-secondary);font-family:var(--font-mono);border:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;gap:6px}
+.file-chip .fi{font-size:13px}
+.resp-tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:3px 8px;border-radius:4px;font-family:var(--font-sans);font-weight:500}
+.resp-tags{display:flex;flex-wrap:wrap;gap:6px}
+.divider{height:0.5px;background:var(--color-border-tertiary)}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:8px;color:var(--color-text-tertiary);font-family:var(--font-sans);font-size:13px}
+.section-label{font-size:10px;font-weight:500;letter-spacing:.06em;color:var(--color-text-tertiary);text-transform:uppercase;font-family:var(--font-sans);padding:8px 8px 2px}
+</style>
+
+<h2 class="sr-only">Explorador interativo da arquitetura do projeto App B — proxy reverso em C#/.NET</h2>
+
+<div class="explorer">
+  <div class="tree-panel" id="tree">
+    <div class="section-label">Projeto</div>
+    <div class="tree-item" data-id="root" onclick="select(this,'root')">
+      <i class="ti ti-folder icon"></i><span class="name">AppB.DwgViewer/</span>
+    </div>
+
+    <div class="section-label">Núcleo</div>
+    <div class="tree-item indent-1" data-id="controllers" onclick="select(this,'controllers')">
+      <i class="ti ti-folder icon"></i><span class="name">Controllers/</span><span class="badge badge-layer">entrada</span>
+    </div>
+    <div class="tree-item indent-2" data-id="fileproxy" onclick="select(this,'fileproxy')">
+      <i class="ti ti-file icon"></i><span class="name">FileProxyController.cs</span>
+    </div>
+    <div class="tree-item indent-2" data-id="health" onclick="select(this,'health')">
+      <i class="ti ti-file icon"></i><span class="name">HealthController.cs</span>
+    </div>
+
+    <div class="tree-item indent-1" data-id="services" onclick="select(this,'services')">
+      <i class="ti ti-folder icon"></i><span class="name">Services/</span><span class="badge badge-layer">negócio</span>
+    </div>
+    <div class="tree-item indent-2" data-id="fileproxyservice" onclick="select(this,'fileproxyservice')">
+      <i class="ti ti-file icon"></i><span class="name">FileProxyService.cs</span>
+    </div>
+    <div class="tree-item indent-2" data-id="tokenservice" onclick="select(this,'tokenservice')">
+      <i class="ti ti-file icon"></i><span class="name">TokenService.cs</span>
+    </div>
+    <div class="tree-item indent-2" data-id="ifileproxyservice" onclick="select(this,'ifileproxyservice')">
+      <i class="ti ti-file icon"></i><span class="name">IFileProxyService.cs</span>
+    </div>
+    <div class="tree-item indent-2" data-id="itokenservice" onclick="select(this,'itokenservice')">
+      <i class="ti ti-file icon"></i><span class="name">ITokenService.cs</span>
+    </div>
+
+    <div class="tree-item indent-1" data-id="models" onclick="select(this,'models')">
+      <i class="ti ti-folder icon"></i><span class="name">Models/</span><span class="badge badge-layer">dados</span>
+    </div>
+    <div class="tree-item indent-2" data-id="tokenpayload" onclick="select(this,'tokenpayload')">
+      <i class="ti ti-file icon"></i><span class="name">TokenPayload.cs</span>
+    </div>
+    <div class="tree-item indent-2" data-id="fileentry" onclick="select(this,'fileentry')">
+      <i class="ti ti-file icon"></i><span class="name">FileEntry.cs</span>
+    </div>
+    <div class="tree-item indent-2" data-id="proxyresult" onclick="select(this,'proxyresult')">
+      <i class="ti ti-file icon"></i><span class="name">ProxyResult.cs</span>
+    </div>
+
+    <div class="section-label">Infra</div>
+    <div class="tree-item indent-1" data-id="middleware" onclick="select(this,'middleware')">
+      <i class="ti ti-folder icon"></i><span class="name">Middleware/</span><span class="badge badge-cross">pipeline</span>
+    </div>
+    <div class="tree-item indent-2" data-id="errorhandler" onclick="select(this,'errorhandler')">
+      <i class="ti ti-file icon"></i><span class="name">ErrorHandlingMiddleware.cs</span>
+    </div>
+    <div class="tree-item indent-2" data-id="requestlog" onclick="select(this,'requestlog')">
+      <i class="ti ti-file icon"></i><span class="name">RequestLoggingMiddleware.cs</span>
+    </div>
+
+    <div class="tree-item indent-1" data-id="exceptions" onclick="select(this,'exceptions')">
+      <i class="ti ti-folder icon"></i><span class="name">Exceptions/</span><span class="badge badge-cross">erros</span>
+    </div>
+    <div class="tree-item indent-2" data-id="tokenex" onclick="select(this,'tokenex')">
+      <i class="ti ti-file icon"></i><span class="name">TokenException.cs</span>
+    </div>
+    <div class="tree-item indent-2" data-id="proxyex" onclick="select(this,'proxyex')">
+      <i class="ti ti-file icon"></i><span class="name">ProxyException.cs</span>
+    </div>
+
+    <div class="tree-item indent-1" data-id="extensions" onclick="select(this,'extensions')">
+      <i class="ti ti-folder icon"></i><span class="name">Extensions/</span><span class="badge badge-cross">DI</span>
+    </div>
+    <div class="tree-item indent-2" data-id="serviceext" onclick="select(this,'serviceext')">
+      <i class="ti ti-file icon"></i><span class="name">ServiceCollectionExtensions.cs</span>
+    </div>
+
+    <div class="section-label">Configuração</div>
+    <div class="tree-item indent-1" data-id="config" onclick="select(this,'config')">
+      <i class="ti ti-folder icon"></i><span class="name">Configuration/</span>
+    </div>
+    <div class="tree-item indent-2" data-id="tokenoptions" onclick="select(this,'tokenoptions')">
+      <i class="ti ti-file icon"></i><span class="name">TokenOptions.cs</span>
+    </div>
+    <div class="tree-item indent-2" data-id="proxyoptions" onclick="select(this,'proxyoptions')">
+      <i class="ti ti-file icon"></i><span class="name">ProxyOptions.cs</span>
+    </div>
+
+    <div class="tree-item indent-1" data-id="appsettings" onclick="select(this,'appsettings')">
+      <i class="ti ti-settings icon"></i><span class="name">appsettings.json</span>
+    </div>
+    <div class="tree-item indent-1" data-id="program" onclick="select(this,'program')">
+      <i class="ti ti-file icon"></i><span class="name">Program.cs</span>
+    </div>
+
+    <div class="section-label">Testes</div>
+    <div class="tree-item" data-id="tests" onclick="select(this,'tests')">
+      <i class="ti ti-folder icon"></i><span class="name">AppB.DwgViewer.Tests/</span>
+    </div>
+    <div class="tree-item indent-1" data-id="unittests" onclick="select(this,'unittests')">
+      <i class="ti ti-folder icon"></i><span class="name">Unit/</span>
+    </div>
+    <div class="tree-item indent-2" data-id="tokentest" onclick="select(this,'tokentest')">
+      <i class="ti ti-file icon"></i><span class="name">TokenServiceTests.cs</span>
+    </div>
+    <div class="tree-item indent-2" data-id="proxytest" onclick="select(this,'proxytest')">
+      <i class="ti ti-file icon"></i><span class="name">FileProxyServiceTests.cs</span>
+    </div>
+    <div class="tree-item indent-1" data-id="integtests" onclick="select(this,'integtests')">
+      <i class="ti ti-folder icon"></i><span class="name">Integration/</span>
+    </div>
+    <div class="tree-item indent-2" data-id="proxyinteg" onclick="select(this,'proxyinteg')">
+      <i class="ti ti-file icon"></i><span class="name">FileProxyControllerTests.cs</span>
+    </div>
+  </div>
+
+  <div class="detail-panel" id="detail">
+    <div class="empty-state">
+      <i class="ti ti-click" style="font-size:28px"></i>
+      <span>Clique em um arquivo ou pasta para ver os detalhes</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const data = {
+  root:{icon:"ti-folder",title:"AppB.DwgViewer/",sub:"Raiz do projeto principal",desc:"Projeto ASP.NET Core Web API. Contém toda a lógica do proxy reverso, middlewares, configurações e registro de dependências. Segue Clean Architecture com separação clara entre camadas de entrada, negócio e infraestrutura. O frontend (ecm-viewer) repassa o token AES criptografado sem descriptografar — toda a lógica de autorização e acesso ao ECM ocorre exclusivamente server-side.",tags:[{l:"ASP.NET Core",c:"info"},{l:"Web API",c:"info"},{l:"C# 12",c:"success"}],files:[]},
+  controllers:{icon:"ti-folder",title:"Controllers/",sub:"Camada de entrada — HTTP",desc:"Responsável apenas por receber requisições HTTP, extrair parâmetros e delegar para os Services. Não contém lógica de negócio. Cada controller tem uma única responsabilidade. Retorna IActionResult ou delega direto para o stream de resposta.",tags:[{l:"Entrada",c:"warning"},{l:"HTTP",c:"info"},{l:"Sem lógica",c:"success"}],files:["FileProxyController.cs","HealthController.cs"]},
+  fileproxy:{icon:"ti-file",title:"FileProxyController.cs",sub:"Controllers/FileProxyController.cs",desc:"Endpoint GET /api/proxy/file/{fileId}?token=... que o browser do ecm-viewer chama. O token recebido é o AES criptografado repassado diretamente pelo frontend sem descriptografar — o browser nunca vê seu conteúdo. Extrai token e fileId do request, delega a descriptografia ao ITokenService e o stream ao IFileProxyService. O controller apenas orquestra e nunca acessa tokenSistema ou urlOrigem em texto claro.",tags:[{l:"GET /api/proxy/file/{id}",c:"info"},{l:"Token opaco no frontend",c:"warning"},{l:"Sem lógica de negócio",c:"success"}],files:[]},
+  health:{icon:"ti-file",title:"HealthController.cs",sub:"Controllers/HealthController.cs",desc:"Endpoint GET /health para health checks do ambiente (Docker, k8s, load balancer). Retorna 200 OK com status das dependências. Útil para monitorar se o serviço está operacional sem precisar acertar o proxy em si.",tags:[{l:"GET /health",c:"info"},{l:"Monitoramento",c:"success"}],files:[]},
+  services:{icon:"ti-folder",title:"Services/",sub:"Camada de negócio",desc:"Coração da aplicação. Contém toda a lógica de descriptografia do token, requisição server-side ao ECM e streaming de arquivos. Cada serviço tem uma interface correspondente para permitir injeção de dependência e facilitar testes. Nunca referencia HttpContext diretamente — recebe o que precisa via parâmetros.",tags:[{l:"Negócio",c:"warning"},{l:"Injetável",c:"success"},{l:"Testável",c:"success"}],files:["IFileProxyService.cs","FileProxyService.cs","ITokenService.cs","TokenService.cs"]},
+  fileproxyservice:{icon:"ti-file",title:"FileProxyService.cs",sub:"Services/FileProxyService.cs",desc:"Implementa IFileProxyService. Recebe o TokenPayload já descriptografado — usa tokenSistema como Bearer nos headers e urlOrigem para montar a URL da requisição server-side ao ECM. Usa IHttpClientFactory para criar um HttpClient nomeado 'AppAClient'. Faz GET com HttpCompletionOption.ResponseHeadersRead para iniciar o stream antes de baixar tudo. Copia os bytes direto para o HttpResponse.Body com CopyToAsync — sem materializar em memória.",tags:[{l:"Stream de bytes",c:"info"},{l:"Sem disco",c:"success"},{l:"IHttpClientFactory",c:"warning"}],files:[]},
+  tokenservice:{icon:"ti-file",title:"TokenService.cs",sub:"Services/TokenService.cs",desc:"Implementa ITokenService. Descriptografa o token AES-256-CBC recebido do frontend usando a chave e salt configurados em appsettings.json (derivação PBKDF2-SHA1). O frontend nunca descriptografa o token — apenas o repassa como string opaca. Após a descriptografia, deserializa o JSON para TokenPayload, que contém tokenSistema e urlOrigem — campos que nunca chegam ao browser. Lança TokenException (token expirado, falha na descriptografia, JSON corrompido) que o ErrorHandlingMiddleware captura e converte em 401.",tags:[{l:"AES-256-CBC",c:"info"},{l:"Descriptografia",c:"warning"},{l:"Throws TokenException",c:"success"}],files:[]},
+  ifileproxyservice:{icon:"ti-file",title:"IFileProxyService.cs",sub:"Services/IFileProxyService.cs",desc:"Interface que define o contrato do serviço de proxy. Permite trocar a implementação sem alterar o controller (ex: versão com cache em memória para arquivos frequentes). Facilita mocks nos testes unitários.",tags:[{l:"Interface",c:"info"},{l:"Contrato",c:"success"}],files:[]},
+  itokenservice:{icon:"ti-file",title:"ITokenService.cs",sub:"Services/ITokenService.cs",desc:"Interface do serviço de token. Permite substituir a implementação AES por outro mecanismo de descriptografia ou validação sem alterar o controller ou outros serviços.",tags:[{l:"Interface",c:"info"},{l:"Contrato",c:"success"}],files:[]},
+  models:{icon:"ti-folder",title:"Models/",sub:"Modelos de domínio",desc:"Classes de dados simples (POCOs). Representam o payload descriptografado do token, as entradas de arquivo e os resultados internos do proxy. Não contêm lógica — só estrutura. Usadas tanto pelos serviços quanto para deserialização após a descriptografia AES.",tags:[{l:"POCOs",c:"info"},{l:"Sem lógica",c:"success"}],files:["TokenPayload.cs","FileEntry.cs","ProxyResult.cs"]},
+  tokenpayload:{icon:"ti-file",title:"TokenPayload.cs",sub:"Models/TokenPayload.cs",desc:"Representa o conteúdo descriptografado do token AES. Campos: DocumentoId, tokenSistema (Bearer token do ECM — lido exclusivamente server-side, nunca exposto ao browser), urlOrigem (URL base do ECM), UserId e TempoExpiracao. É o objeto central que circula entre TokenService e FileProxyService. O browser nunca tem acesso a este objeto — ele trafega apenas internamente no servidor.",tags:[{l:"Payload AES",c:"info"},{l:"tokenSistema server-side",c:"warning"}],files:[]},
+  fileentry:{icon:"ti-file",title:"FileEntry.cs",sub:"Models/FileEntry.cs",desc:"Representa um arquivo específico dentro do payload. Campos: FileId (identificador único), FileName (nome original) e UrlPath (URL completa do arquivo no ECM). O FileId é o que o browser envia como parâmetro de rota; a UrlPath nunca sai do servidor.",tags:[{l:"Modelo de arquivo",c:"info"}],files:[]},
+  proxyresult:{icon:"ti-file",title:"ProxyResult.cs",sub:"Models/ProxyResult.cs",desc:"Resultado interno do FileProxyService. Encapsula ContentType, ContentDisposition e o Stream do arquivo. Permite que o controller configure os headers de resposta antes de iniciar o stream, sem que o serviço precise conhecer o HttpResponse.",tags:[{l:"Result pattern",c:"success"},{l:"Desacoplamento",c:"info"}],files:[]},
+  middleware:{icon:"ti-folder",title:"Middleware/",sub:"Pipeline de requisição",desc:"Middlewares ASP.NET Core que interceptam todas as requisições antes de chegarem nos controllers. Responsáveis por tratamento global de erros e logging estruturado. Registrados em Program.cs na ordem correta.",tags:[{l:"Pipeline",c:"warning"},{l:"Cross-cutting",c:"info"}],files:["ErrorHandlingMiddleware.cs","RequestLoggingMiddleware.cs"]},
+  errorhandler:{icon:"ti-file",title:"ErrorHandlingMiddleware.cs",sub:"Middleware/ErrorHandlingMiddleware.cs",desc:"Captura todas as exceções não tratadas e as converte em respostas HTTP padronizadas (ProblemDetails RFC 7807). TokenException vira 401, ProxyException vira 502, FileNotFoundException vira 404. Garante que a API nunca vaze stack traces para o cliente.",tags:[{l:"Global error handler",c:"warning"},{l:"ProblemDetails",c:"info"},{l:"401 / 502 / 404",c:"success"}],files:[]},
+  requestlog:{icon:"ti-file",title:"RequestLoggingMiddleware.cs",sub:"Middleware/RequestLoggingMiddleware.cs",desc:"Loga cada requisição com método, rota, status de resposta e duração em ms usando ILogger<T>. Útil para diagnóstico de performance no streaming de arquivos grandes. Omite o token dos logs para não vazar credenciais.",tags:[{l:"Logging estruturado",c:"info"},{l:"Diagnóstico",c:"success"}],files:[]},
+  exceptions:{icon:"ti-folder",title:"Exceptions/",sub:"Hierarquia de exceções",desc:"Exceções de domínio fortemente tipadas. Evita que o código use Exception genérica, tornando o ErrorHandlingMiddleware preciso ao mapear para status HTTP. Cada exceção carrega contexto relevante (ex: qual fileId não foi encontrado).",tags:[{l:"Domain exceptions",c:"warning"},{l:"Tipagem forte",c:"success"}],files:["TokenException.cs","ProxyException.cs"]},
+  tokenex:{icon:"ti-file",title:"TokenException.cs",sub:"Exceptions/TokenException.cs",desc:"Lançada pelo TokenService. Subtipos: TokenExpiredException (TempoExpiracao ultrapassado — 401), TokenInvalidException (falha na descriptografia AES, bytes corrompidos ou chave errada — 401), TokenMalformedException (JSON inválido após descriptografia bem-sucedida — 400). O middleware discrimina pelo tipo exato.",tags:[{l:"Token",c:"warning"},{l:"401 / 400",c:"info"}],files:[]},
+  proxyex:{icon:"ti-file",title:"ProxyException.cs",sub:"Exceptions/ProxyException.cs",desc:"Lançada pelo FileProxyService quando o ECM retorna erro. Carrega StatusCode original do ECM, FileId e UrlPath (sanitizada). O middleware converte em 502 Bad Gateway com detalhes para diagnóstico.",tags:[{l:"Proxy",c:"warning"},{l:"502 Bad Gateway",c:"info"}],files:[]},
+  extensions:{icon:"ti-folder",title:"Extensions/",sub:"Registro de dependências",desc:"Métodos de extensão para IServiceCollection que organizam o registro de DI em grupos lógicos. Mantém o Program.cs limpo — em vez de dezenas de AddScoped/AddHttpClient, usa uma chamada como builder.Services.AddProxyServices(config).",tags:[{l:"DI",c:"success"},{l:"Extension methods",c:"info"}],files:["ServiceCollectionExtensions.cs"]},
+  serviceext:{icon:"ti-file",title:"ServiceCollectionExtensions.cs",sub:"Extensions/ServiceCollectionExtensions.cs",desc:"Contém AddProxyServices(IConfiguration config) que registra: ITokenService → TokenService (Scoped), IFileProxyService → FileProxyService (Scoped), IHttpClientFactory com 'AppAClient' configurado (timeout, retry policy via Polly), e as classes de Options (TokenOptions, ProxyOptions).",tags:[{l:"AddProxyServices()",c:"info"},{l:"Polly opcional",c:"success"}],files:[]},
+  config:{icon:"ti-folder",title:"Configuration/",sub:"Classes de configuração tipada",desc:"Classes POCO que mapeiam seções do appsettings.json usando o padrão Options do ASP.NET Core. Permitem injetar configuração tipada nos serviços via IOptions<T> em vez de IConfiguration diretamente, facilitando testes e evitando strings mágicas.",tags:[{l:"Options pattern",c:"success"},{l:"IOptions<T>",c:"info"}],files:["TokenOptions.cs","ProxyOptions.cs"]},
+  tokenoptions:{icon:"ti-file",title:"TokenOptions.cs",sub:"Configuration/TokenOptions.cs",desc:"Mapeia a seção Token do appsettings.json. Propriedades: AesKey (chave AES-256 — a mesma utilizada pela App A para criptografar o token), SaltKey (salt para derivação PBKDF2), Iterations (número de iterações da derivação de chave, padrão 1000) e ClockSkewSeconds (tolerância em segundos para validação de TempoExpiracao). Injetado no TokenService via IOptions<TokenOptions>.",tags:[{l:"Token:AesKey",c:"warning"},{l:"AES config",c:"info"}],files:[]},
+  proxyoptions:{icon:"ti-file",title:"ProxyOptions.cs",sub:"Configuration/ProxyOptions.cs",desc:"Mapeia a seção Proxy do appsettings.json. Propriedades: TimeoutSeconds (timeout do HttpClient para o ECM), BufferSizeBytes (tamanho do buffer de stream, padrão 81920), AllowedFileExtensions (whitelist de .dwg, .pdf etc).",tags:[{l:"Proxy:TimeoutSeconds",c:"warning"},{l:"Buffer size",c:"info"}],files:[]},
+  appsettings:{icon:"ti-settings",title:"appsettings.json",sub:"Configuração do ambiente",desc:"Arquivo de configuração central. Seções: Token (AesKey e SaltKey para descriptografia — a mesma chave que a App A usa para criptografar; nunca JWT), Proxy (timeout e buffer), Cors (origens permitidas), Logging (nível e destino). Nunca comita chaves secretas — use appsettings.Development.json local ou variáveis de ambiente em produção.",tags:[{l:"Nunca comitar secrets",c:"warning"},{l:"Env vars em prod",c:"success"}],files:[]},
+  program:{icon:"ti-file",title:"Program.cs",sub:"Program.cs — entry point",desc:"Entry point da aplicação. Registra serviços via builder.Services.AddProxyServices(config), configura o pipeline de middlewares na ordem correta (ErrorHandling → RequestLogging → Routing → CORS → Controllers), e inicia o host. Mantido enxuto graças às Extensions.",tags:[{l:"Entry point",c:"info"},{l:"Minimal API style",c:"success"}],files:[]},
+  tests:{icon:"ti-folder",title:"AppB.DwgViewer.Tests/",sub:"Projeto de testes",desc:"Projeto separado de testes xUnit. Referencia o projeto principal sem dependência circular. Usa Moq para mocks das interfaces e WebApplicationFactory<Program> para testes de integração. Cobertura focada nos Services e no pipeline do proxy.",tags:[{l:"xUnit",c:"info"},{l:"Moq",c:"success"},{l:"WebApplicationFactory",c:"warning"}],files:[]},
+  unittests:{icon:"ti-folder",title:"Unit/",sub:"Testes unitários",desc:"Testa Services em isolamento total. Cada teste instancia a implementação concreta com dependências mockadas via Moq. Verifica lógica de descriptografia do token (expirado, chave errada, JSON inválido) e comportamento do proxy (headers repassados, stream copiado corretamente).",tags:[{l:"Isolados",c:"success"},{l:"Rápidos",c:"info"}],files:["TokenServiceTests.cs","FileProxyServiceTests.cs"]},
+  tokentest:{icon:"ti-file",title:"TokenServiceTests.cs",sub:"Unit/TokenServiceTests.cs",desc:"Testa TokenService.Decrypt() com cenários: token válido retorna TokenPayload correto com todos os campos, token com TempoExpiracao ultrapassado (lança TokenExpiredException), bytes corrompidos ou chave AES incorreta (lança TokenInvalidException), JSON inválido após descriptografia bem-sucedida (lança TokenMalformedException).",tags:[{l:"TokenService",c:"info"},{l:"Cenários de falha",c:"warning"}],files:[]},
+  proxytest:{icon:"ti-file",title:"FileProxyServiceTests.cs",sub:"Unit/FileProxyServiceTests.cs",desc:"Testa FileProxyService.StreamFileAsync() com HttpClient mockado via MockHttpMessageHandler. Verifica: header Authorization montado com tokenSistema do payload, ContentType copiado na resposta, stream copiado byte a byte, ProxyException lançado quando o ECM retorna não-2xx.",tags:[{l:"FileProxyService",c:"info"},{l:"MockHttpMessageHandler",c:"warning"}],files:[]},
+  integtests:{icon:"ti-folder",title:"Integration/",sub:"Testes de integração",desc:"Sobe a aplicação completa em memória via WebApplicationFactory<Program>. Usa WireMock.Net para simular o ECM respondendo com arquivos reais. Testa o pipeline completo: token AES criptografado → descriptografia → proxy → stream chegando no body da resposta HTTP.",tags:[{l:"WebApplicationFactory",c:"warning"},{l:"WireMock.Net",c:"info"}],files:["FileProxyControllerTests.cs"]},
+  proxyinteg:{icon:"ti-file",title:"FileProxyControllerTests.cs",sub:"Integration/FileProxyControllerTests.cs",desc:"Sobe a aplicação em memória com ECM simulado por WireMock. Cenários: requisição com token AES válido retorna 200 + bytes corretos, token expirado retorna 401, token com chave errada retorna 401, fileId desconhecido retorna 404, ECM retornando 500 resulta em 502 com ProblemDetails.",tags:[{l:"End-to-end em memória",c:"success"},{l:"WireMock.Net",c:"info"}],files:[]}
+};
+
+const colorMap={info:"background:var(--color-background-info);color:var(--color-text-info)",success:"background:var(--color-background-success);color:var(--color-text-success)",warning:"background:var(--color-background-warning);color:var(--color-text-warning)"};
+const fileIcons={".cs":"ti-file-code",".json":"ti-file-code"};
+function getFileIcon(n){const e=n.substring(n.lastIndexOf('.'));return fileIcons[e]||"ti-file";}
+
+function select(el,id){
+  document.querySelectorAll('.tree-item').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+  const d=data[id];if(!d)return;
+  const panel=document.getElementById('detail');
+  const filesHtml=d.files.length?`<div class="divider"></div><div style="font-size:11px;color:var(--color-text-tertiary);font-family:var(--font-sans);margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em">Arquivos</div><div class="detail-files">${d.files.map(f=>`<div class="file-chip"><i class="ti ${getFileIcon(f)} fi"></i>${f}</div>`).join('')}</div>`:'';
+  const tagsHtml=d.tags.length?`<div class="resp-tags">${d.tags.map(t=>`<span class="resp-tag" style="${colorMap[t.c]}">${t.l}</span>`).join('')}</div>`:'';
+  panel.innerHTML=`<div class="detail-title"><i class="ti ${d.icon}" style="font-size:18px"></i>${d.title}</div><div class="detail-subtitle">${d.sub}</div><div class="divider"></div><div class="detail-desc">${d.desc}</div>${tagsHtml}${filesHtml}`;
+}
+</script>
