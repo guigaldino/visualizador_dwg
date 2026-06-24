@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EcmProxy")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b6b0af2e54a4856a1eead39ab79d1a2d9d5cd58")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f5cdc4c63d9788118a10ab151c823d64e338e9c2")]
 [assembly: System.Reflection.AssemblyProductAttribute("EcmProxy")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EcmProxy")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
