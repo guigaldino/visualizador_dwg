@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../EcmProxyTests/EcmProxyTests.csproj" />
+  <Project Path="EcmProxy/EcmProxy.csproj" />
+</Solution>

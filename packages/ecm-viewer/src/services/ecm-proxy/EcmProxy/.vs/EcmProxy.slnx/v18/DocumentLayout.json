@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Reposit\u00F3rios\\visualizador_dwg\\packages\\ecm-viewer\\src\\services\\ecm-proxy\\EcmProxy\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7FAC997A-70AE-4604-9270-914B45FB7B51}|EcmProxy\\EcmProxy.csproj|d:\\reposit\u00F3rios\\visualizador_dwg\\packages\\ecm-viewer\\src\\services\\ecm-proxy\\ecmproxy\\ecmproxy\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7FAC997A-70AE-4604-9270-914B45FB7B51}|EcmProxy\\EcmProxy.csproj|solutionrelative:ecmproxy\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Reposit\u00F3rios\\visualizador_dwg\\packages\\ecm-viewer\\src\\services\\ecm-proxy\\EcmProxy\\EcmProxy\\Program.cs",
+              "RelativeDocumentMoniker": "EcmProxy\\Program.cs",
+              "ToolTip": "D:\\Reposit\u00F3rios\\visualizador_dwg\\packages\\ecm-viewer\\src\\services\\ecm-proxy\\EcmProxy\\EcmProxy\\Program.cs",
+              "RelativeToolTip": "EcmProxy\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-24T14:45:28.478Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
