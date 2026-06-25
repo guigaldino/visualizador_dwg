@@ -1,0 +1,85 @@
+﻿using EcmProxy.Configurations;
+using EcmProxy.Exceptions;
+using EcmProxy.Models;
+using Microsoft.Extensions.Options;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json;
+
+namespace EcmProxy.Services
+{
+    public class TokenService : ITokenService
+    {
+        private readonly TokenOptions _options;
+
+        public TokenService(IOptions<TokenOptions> options)
+        {
+            _options = options.Value;
+        }
+
+        public TokenPayload Descriptografar(string tokenCriptografado)
+        {
+            byte[] bytesCriptografados;
+            try
+            {
+                bytesCriptografados = Convert.FromBase64String(tokenCriptografado);
+            }
+            catch(FormatException ex)
+            {
+                throw new TokenInvalidException(ex);
+            }
+
+            string json;
+            try
+            {
+                json = DescriptografarAes(bytesCriptografados);
+            }
+            catch(CryptographicException ex)
+            {
+                throw new TokenInvalidException(ex);
+            }
+
+            TokenPayload payload;
+            try
+            {
+                payload = JsonSerializer.Deserialize<TokenPayload>(json)
+                 ?? throw new TokenMalformedException(new InvalidOperationException("Deserialization returnou null."));
+            }
+            catch(JsonException ex)
+            {
+                throw new TokenMalformedException(ex);
+            }
+
+            var expiracao = payload.TempoExpiracao.AddSeconds(_options.ClockSkewSeconds);
+            if (expiracao < DateTime.UtcNow)
+            {
+                throw new TokenExpiredException(payload.TempoExpiracao);
+            }
+
+            return payload;
+        }
+
+        private string DescriptografarAes(byte[] bytesCriptografados)
+        {
+            var keyBytes = new Rfc2898DeriveBytes(
+            _options.AesKey,
+            Encoding.UTF8.GetBytes(_options.SaltKey),
+            _options.Iteration,
+            HashAlgorithmName.SHA1
+            ).GetBytes(16);
+
+            using var aes = Aes.Create();
+            aes.Key = keyBytes;
+            aes.IV = keyBytes;
+            aes.Mode = CipherMode.CBC;
+            aes.Padding = PaddingMode.PKCS7;
+
+            using var decryptor = aes.CreateDecryptor();
+            using var ms = new MemoryStream(bytesCriptografados);
+            using var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read);
+            using var sr = new StreamReader(cs, Encoding.UTF8);
+            return sr.ReadToEnd();
+        }
+
+    }
+}
