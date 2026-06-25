@@ -89,7 +89,6 @@ D:\Repositórios\visualizador_dwg\services\ecm-proxy\EcmProxy\EcmProxy\obj\Debug
 D:\Repositórios\visualizador_dwg\services\ecm-proxy\EcmProxy\EcmProxy\obj\Debug\net8.0\staticwebassets.development.json
 D:\Repositórios\visualizador_dwg\services\ecm-proxy\EcmProxy\EcmProxy\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 D:\Repositórios\visualizador_dwg\services\ecm-proxy\EcmProxy\EcmProxy\obj\Debug\net8.0\swae.build.ex.cache
-D:\Repositórios\visualizador_dwg\services\ecm-proxy\EcmProxy\EcmProxy\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 D:\Repositórios\visualizador_dwg\services\ecm-proxy\EcmProxy\EcmProxy\obj\Debug\net8.0\EcmProxy.csproj.Up2Date
 D:\Repositórios\visualizador_dwg\services\ecm-proxy\EcmProxy\EcmProxy\obj\Debug\net8.0\EcmProxy.dll
 D:\Repositórios\visualizador_dwg\services\ecm-proxy\EcmProxy\EcmProxy\obj\Debug\net8.0\refint\EcmProxy.dll
