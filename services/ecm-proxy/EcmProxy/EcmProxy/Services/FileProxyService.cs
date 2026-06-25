@@ -1,4 +1,4 @@
-﻿using EcmProxy.Configurations;
+using EcmProxy.Configurations;
 using EcmProxy.Models;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
@@ -16,18 +16,19 @@ namespace EcmProxy.Services
             _proxyOptions = options.Value;
         }
 
-        public async Task<List<FileEntry>> GetFilesAsync(TokenPayload payload, CancellationToken cancellationToken = default)
+        public async Task<List<FileEntry>> ObterArquivosAsync(TokenPayload payload, CancellationToken cancellationToken = default)
         {
-            var client = CreateClient(payload);
+            var client = CriarCliente(payload);
 
             
         }
 
-        public async Task<ProxyResult> StreamFileAsync(TokenPayload payload, int fileId, CancellationToken cancellationToken = default) {
-            var client = CreateClient(payload);
+        public async Task<ProxyResult> ObterFluxoArquivoAsync(TokenPayload payload, int idArquivo, CancellationToken cancellationToken = default) {
+            var client = CriarCliente(payload);
+
         }
 
-        private HttpClient CreateClient(TokenPayload payload) {
+        private HttpClient CriarCliente(TokenPayload payload) {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(payload.UrlOrigem);
             client.DefaultRequestHeaders.Authorization =

@@ -1,12 +1,12 @@
-﻿namespace EcmProxy.Configurations
+namespace EcmProxy.Configurations
 {
     public class TokenOptions
     {
         public const string Section = "Token";
 
-        public string AesKey { get; set; } = string.Empty;
-        public string SaltKey { get; set; } = string.Empty;
-        public int Iteration { get; set; } = 1000;
-        public int ClockSkewSeconds { get; set; } = 60;
+        public string ChaveAes { get; set; } = string.Empty;
+        public string ChaveSalt { get; set; } = string.Empty;
+        public int Iteracao { get; set; } = 1000;
+        public int ClockSkewSegundos { get; set; } = 60;
     }
 }

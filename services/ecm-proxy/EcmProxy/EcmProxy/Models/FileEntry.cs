@@ -1,16 +1,16 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace EcmProxy.Models
 {
     public class FileEntry
     {
-        public int FileId { get; set; }
+        public int IdArquivo { get; set; }
         
-        public string FileName { get; set; } = string.Empty;
+        public string NomeArquivo { get; set; } = string.Empty;
         
-        public long FileSize { get; set; }
+        public long TamanhoArquivo { get; set; }
         
         [JsonIgnore]
-        public string UrlPath { get; set; } = string.Empty;
+        public string CaminhoUrl { get; set; } = string.Empty;
     }
 }

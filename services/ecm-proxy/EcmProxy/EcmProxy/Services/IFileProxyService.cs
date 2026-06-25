@@ -1,10 +1,10 @@
-﻿using EcmProxy.Models;
+using EcmProxy.Models;
 
 namespace EcmProxy.Services
 {
     public interface IFileProxyService
     {
-        Task<List<FileEntry>> GetFilesAsync(TokenPayload payload, CancellationToken cancellationToken = default);
-        Task<ProxyResult> StreamFileAsync(TokenPayload payload, int fileId, CancellationToken cancellationToken = default);
+        Task<List<FileEntry>> ObterArquivosAsync(TokenPayload payload, CancellationToken cancellationToken = default);
+        Task<ProxyResult> ObterFluxoArquivoAsync(TokenPayload payload, int idArquivo, CancellationToken cancellationToken = default);
     }
 }

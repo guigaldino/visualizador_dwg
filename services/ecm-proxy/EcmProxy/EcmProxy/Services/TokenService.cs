@@ -1,4 +1,4 @@
-﻿using EcmProxy.Configurations;
+using EcmProxy.Configurations;
 using EcmProxy.Exceptions;
 using EcmProxy.Models;
 using Microsoft.Extensions.Options;
@@ -50,7 +50,7 @@ namespace EcmProxy.Services
                 throw new TokenMalformedException(ex);
             }
 
-            var expiracao = payload.TempoExpiracao.AddSeconds(_options.ClockSkewSeconds);
+            var expiracao = payload.TempoExpiracao.AddSeconds(_options.ClockSkewSegundos);
             if (expiracao < DateTime.UtcNow)
             {
                 throw new TokenExpiredException(payload.TempoExpiracao);
@@ -62,9 +62,9 @@ namespace EcmProxy.Services
         private string DescriptografarAes(byte[] bytesCriptografados)
         {
             var keyBytes = new Rfc2898DeriveBytes(
-            _options.AesKey,
-            Encoding.UTF8.GetBytes(_options.SaltKey),
-            _options.Iteration,
+            _options.ChaveAes,
+            Encoding.UTF8.GetBytes(_options.ChaveSalt),
+            _options.Iteracao,
             HashAlgorithmName.SHA1
             ).GetBytes(16);
 

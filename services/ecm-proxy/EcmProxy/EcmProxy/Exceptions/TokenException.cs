@@ -1,4 +1,4 @@
-﻿namespace EcmProxy.Exceptions
+namespace EcmProxy.Exceptions
 {
     public class TokenException : Exception
     {
@@ -8,25 +8,25 @@
 
     public class TokenExpiredException : TokenException
     {
-        public DateTime ExpiradoAt { get; }
+        public DateTime ExpiradoEm { get; }
 
-        public TokenExpiredException(DateTime expiredAt)
-            : base($"Token expirado em: {expiredAt:u}.")
+        public TokenExpiredException(DateTime expiradoEm)
+            : base($"Token expirado em: {expiradoEm:u}.")
         {
-            ExpiradoAt = expiredAt;
+            ExpiradoEm = expiradoEm;
         }
 
     }
 
     public class TokenInvalidException : TokenException
     {
-        public TokenInvalidException(Exception inner)
-            : base($"Falha na descriptografia AES. Token corrompido ou chave incorreta.", inner) { }
+        public TokenInvalidException(Exception excecaoInterna)
+            : base($"Falha na descriptografia AES. Token corrompido ou chave incorreta.", excecaoInterna) { }
     }
 
     public class TokenMalformedException : TokenException
     {
-        public TokenMalformedException(Exception inner)
-            : base("Token descriptografado com sucesso, mas o JSON interno é inválido.", inner) { }
+        public TokenMalformedException(Exception excecaoInterna)
+            : base("Token descriptografado com sucesso, mas o JSON interno é inválido.", excecaoInterna) { }
     }
 }
