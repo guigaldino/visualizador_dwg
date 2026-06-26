@@ -59,7 +59,6 @@ namespace EcmProxy.Middleware
                 return;
 
             contexto.Response.StatusCode = codigoStatus;
-            contexto.Response.ContentType = "application/problem+json";
 
             var problema = new ProblemDetails
             {
@@ -68,7 +67,7 @@ namespace EcmProxy.Middleware
                 Detail = detalhe
             };
 
-            await contexto.Response.WriteAsJsonAsync(problema);
+            await contexto.Response.WriteAsJsonAsync(problema, options: null, contentType: "application/problem+json");
         }
     }
 }

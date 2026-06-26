@@ -27,10 +27,10 @@ namespace EcmProxy.Controllers
         }
 
         [HttpGet("files/{anexoId}/stream")]
-        public async Task<IActionResult> ObterStreamArquivo(int idAnexo, [FromQuery] string token, CancellationToken cancellationToken)
+        public async Task<IActionResult> ObterStreamArquivo(int anexoId, [FromQuery] string token, CancellationToken cancellationToken)
         {
             var payload = _tokenService.Descriptografar(token);
-            var resultado = await _fileProxyService.ObterStreamsArquivoAsync(payload, idAnexo, cancellationToken);
+            var resultado = await _fileProxyService.ObterStreamsArquivoAsync(payload, anexoId, cancellationToken);
 
             if(resultado.ContentDisposition is not null)
                 Response.Headers.Append("Content-Disposition", resultado.ContentDisposition);
