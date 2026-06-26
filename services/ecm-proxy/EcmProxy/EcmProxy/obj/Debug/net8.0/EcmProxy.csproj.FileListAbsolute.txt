@@ -95,3 +95,4 @@ D:\Repositórios\visualizador_dwg\services\ecm-proxy\EcmProxy\EcmProxy\obj\Debug
 D:\Repositórios\visualizador_dwg\services\ecm-proxy\EcmProxy\EcmProxy\obj\Debug\net8.0\EcmProxy.pdb
 D:\Repositórios\visualizador_dwg\services\ecm-proxy\EcmProxy\EcmProxy\obj\Debug\net8.0\EcmProxy.genruntimeconfig.cache
 D:\Repositórios\visualizador_dwg\services\ecm-proxy\EcmProxy\EcmProxy\obj\Debug\net8.0\ref\EcmProxy.dll
+D:\Repositórios\visualizador_dwg\services\ecm-proxy\EcmProxy\EcmProxy\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
