@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using EcmProxyTests.Helpers;
 
 namespace EcmProxyTests.Unit
 {
@@ -30,34 +31,6 @@ namespace EcmProxyTests.Unit
             return new TokenService(opts);
         }
 
-        private string CriptografarToken(object payload, TokenOptions opcoes)
-        {
-            var json = JsonSerializer.Serialize(payload);
-
-            var keyBytes = new Rfc2898DeriveBytes(
-                opcoes.ChaveAes,
-                Encoding.UTF8.GetBytes(opcoes.ChaveSalt),
-                opcoes.Iteracao,
-                HashAlgorithmName.SHA1
-            ).GetBytes(16);
-
-            using var aes = Aes.Create();
-            aes.Key = keyBytes;
-            aes.IV = keyBytes;
-            aes.Mode = CipherMode.CBC;
-            aes.Padding = PaddingMode.PKCS7;
-
-            using var encriptador = aes.CreateEncryptor();
-            using var ms = new MemoryStream();
-            using var cs = new CryptoStream(ms, encriptador, CryptoStreamMode.Write);
-            using var sw = new StreamWriter(cs, Encoding.UTF8);
-            sw.Write(json);
-            sw.Flush();
-            cs.FlushFinalBlock();
-
-            return Convert.ToBase64String(ms.ToArray());
-        }
-
         [Fact]
         public void Descriptografar_TokenValido_RetornaPayloadCorreto()
         {
@@ -71,7 +44,7 @@ namespace EcmProxyTests.Unit
                 TempoExpiracao = DateTime.UtcNow.AddHours(1)
             };
 
-            var token = CriptografarToken(payloadEsperado, _opcoesPadrao);
+            var token = TokenTestHelper.CriptografarToken(payloadEsperado);
             var servico = CriarServico();
 
             // Act
@@ -94,7 +67,7 @@ namespace EcmProxyTests.Unit
                 TempoExpiracao = DateTime.UtcNow.AddHours(-1)
             };
 
-            var token = CriptografarToken(payloadExpirado, _opcoesPadrao);
+            var token = TokenTestHelper.CriptografarToken(payloadExpirado);
             var servico = CriarServico();
 
             // Act & Assert
@@ -116,7 +89,7 @@ namespace EcmProxyTests.Unit
         {
             // Arrange
             var payload = new TokenPayload { IdDocumento = 1, TempoExpiracao = DateTime.UtcNow.AddHours(1) };
-            var token = CriptografarToken(payload, _opcoesPadrao);
+            var token = TokenTestHelper.CriptografarToken(payload);
 
             var opcoesChaveErrada = new TokenOptions
             {

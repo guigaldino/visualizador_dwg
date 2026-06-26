@@ -7,6 +7,7 @@ using Moq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using EcmProxyTests.Helpers;
 
 namespace EcmProxyTests.Unit
 {
@@ -153,26 +154,5 @@ namespace EcmProxyTests.Unit
 
         private static HttpResponseMessage RespostaJson(object corpo) =>
             new(HttpStatusCode.OK) { Content = JsonContent.Create(corpo) };
-    }
-
-    internal class MockHttpMessageHandler : HttpMessageHandler
-    {
-        private readonly Dictionary<string, Func<HttpResponseMessage>> _rotas = new();
-
-        public void ConfigurarRota(string caminho, Func<HttpResponseMessage> fabricarResposta)
-        {
-            _rotas[caminho] = fabricarResposta;
-        }
-
-        protected override Task<HttpResponseMessage> SendAsync(
-            HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            var caminho = request.RequestUri?.AbsolutePath ?? "/";
-
-            if (_rotas.TryGetValue(caminho, out var fabricar))
-                return Task.FromResult(fabricar());
-
-            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.NotFound));
-        }
     }
 }
