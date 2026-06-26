@@ -1,25 +1,39 @@
+using EcmProxy.Extensions;
+using EcmProxy.Middleware;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Serviços
+builder.Services.AdicionarServicosProxy(builder.Configuration);
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(opcoes =>
+{
+    var origensPermitidas = builder.Configuration
+        .GetSection("Cors:OrigensPermitidas")
+        .Get<string[]>() ?? [];
+
+    opcoes.AddDefaultPolicy(politica =>
+        politica
+            .WithOrigins(origensPermitidas)
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
+app.UseMiddleware<RequestLoggingMiddleware>();
+app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseCors();
 app.MapControllers();
 
 app.Run();
