@@ -30,7 +30,7 @@ namespace EcmProxyTests.Unit
         private FileProxyService CriarServico(MockHttpMessageHandler handler)
         {
             _mockFactory
-                .Setup(f => f.CreateClient("AppAClient"))
+                .Setup(f => f.CreateClient("EcmClient"))
                 .Returns(new HttpClient(handler));
 
             return new FileProxyService(_mockFactory.Object, Options.Create(_opcoesPadrao));
