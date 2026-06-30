@@ -12,7 +12,7 @@ export default defineConfig(({ command }) => {
     base: './',
     server: {
       proxy: {
-        '/api/proxy': 'http://localhost:5000'
+        '/api/proxy': 'http://localhost:5272'
       }
     },
     resolve: {

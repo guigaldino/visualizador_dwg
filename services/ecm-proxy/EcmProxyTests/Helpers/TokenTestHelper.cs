@@ -8,7 +8,7 @@ namespace EcmProxyTests.Helpers
     internal static class TokenTestHelper
     {
         internal const string ChaveAes = "chave-teste-123";
-        internal const string ChaveSalt = "salt-teste-456";
+        internal const string ChaveSalt = "salt-teste-456!!";
         internal const int Iteracoes = 1000;
 
         internal static string CriptografarToken(TokenPayload payload)
@@ -24,7 +24,7 @@ namespace EcmProxyTests.Helpers
 
             using var aes = Aes.Create();
             aes.Key = keyBytes;
-            aes.IV = keyBytes;
+            aes.IV = Encoding.UTF8.GetBytes(ChaveSalt);
             aes.Mode = CipherMode.CBC;
             aes.Padding = PaddingMode.PKCS7;
 

@@ -42,7 +42,7 @@ namespace EcmProxy.Services
             TokenPayload payload;
             try
             {
-                payload = JsonSerializer.Deserialize<TokenPayload>(json)
+                payload = JsonSerializer.Deserialize<TokenPayload>(json, _opcoesJson)
                  ?? throw new TokenMalformedException(new InvalidOperationException("Deserialization returnou null."));
             }
             catch(JsonException ex)
@@ -51,13 +51,18 @@ namespace EcmProxy.Services
             }
 
             var expiracao = payload.TempoExpiracao.AddSeconds(_options.ClockSkewSegundos);
-            if (expiracao < DateTime.UtcNow)
+            if (expiracao < DateTime.Now)
             {
                 throw new TokenExpiredException(payload.TempoExpiracao);
             }
 
             return payload;
         }
+
+        private static readonly JsonSerializerOptions _opcoesJson = new()
+        {
+            PropertyNameCaseInsensitive = true
+        };
 
         private string DescriptografarAes(byte[] bytesCriptografados)
         {
