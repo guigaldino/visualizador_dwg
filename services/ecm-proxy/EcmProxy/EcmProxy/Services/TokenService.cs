@@ -70,7 +70,7 @@ namespace EcmProxy.Services
 
             using var aes = Aes.Create();
             aes.Key = keyBytes;
-            aes.IV = keyBytes;
+            aes.IV = Encoding.UTF8.GetBytes(_options.ChaveSalt);
             aes.Mode = CipherMode.CBC;
             aes.Padding = PaddingMode.PKCS7;
 
