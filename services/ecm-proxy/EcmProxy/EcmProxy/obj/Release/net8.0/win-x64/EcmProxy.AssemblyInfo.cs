@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EcmProxy")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+39b71c8bcb8d5f851eae360eb86dbb92eb19ae7f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d8e75cb96364d1ea9ef533f965290e6ce03af2c5")]
 [assembly: System.Reflection.AssemblyProductAttribute("EcmProxy")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EcmProxy")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
