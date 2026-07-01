@@ -5,7 +5,8 @@ namespace EcmProxy.Models
     public class Anexo
     {
         public int Id { get; set; }
-        
+
+        [JsonPropertyName("nomeOriginal")]
         public string Nome{ get; set; } = string.Empty;
         
         public long Tamanho{ get; set; }

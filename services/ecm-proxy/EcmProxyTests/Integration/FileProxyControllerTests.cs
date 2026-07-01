@@ -146,7 +146,7 @@ namespace EcmProxyTests.Integration
                 {
                     Content = new MemoryStream(bytesEsperados),
                     ContentType = "application/octet-stream",
-                    ContentDisposition = "inline; filename=\"projeto.dwg\""
+                    NomeArquivo = "projeto.dwg"
                 });
 
             var token = TokenTestHelper.CriptografarToken(CriarPayload());

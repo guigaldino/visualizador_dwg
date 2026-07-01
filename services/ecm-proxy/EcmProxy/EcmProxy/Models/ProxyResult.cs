@@ -4,6 +4,6 @@
     {
         public Stream Content { get; set; } = Stream.Null;
         public string ContentType { get; set; } = string.Empty;
-        public string? ContentDisposition { get; set; }
+        public string? NomeArquivo { get; set; }
     }
 }

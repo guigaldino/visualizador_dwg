@@ -127,7 +127,7 @@ namespace EcmProxyTests.Unit
             // Assert
             Assert.NotNull(resultado);
             Assert.Equal("application/octet-stream", resultado.ContentType);
-            Assert.Contains("projeto.dwg", resultado.ContentDisposition);
+            Assert.Contains("projeto.dwg", resultado.NomeArquivo);
         }
 
         [Fact]

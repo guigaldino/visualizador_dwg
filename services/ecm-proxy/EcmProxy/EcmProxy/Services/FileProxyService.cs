@@ -39,7 +39,7 @@ namespace EcmProxy.Services
             var anexos = await ObterArquivosAsync(payload, cancellationToken);
 
             var anexo = anexos.FirstOrDefault(anx => anx.Id == anexoId)
-                ?? throw new FileNotFoundException($"Arquivo {anexoId} não encontrado.", anexoId.ToString());
+                ?? throw new FileNotFoundException($"Arquivo {anexoId} nï¿½o encontrado.", anexoId.ToString());
 
             var response = await client.GetAsync(anexo.CaminhoUrl, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
 
@@ -50,15 +50,17 @@ namespace EcmProxy.Services
             {
                 Content = await response.Content.ReadAsStreamAsync(cancellationToken),
                 ContentType = response.Content.Headers.ContentType?.MediaType ?? "application/octet-stream",
-                ContentDisposition = $"inline; filename=\"{anexo.Nome}\""
+                NomeArquivo = anexo.Nome
             };
         }
 
         private HttpClient CriarCliente(TokenPayload payload) {
             var client = _httpClientFactory.CreateClient("EcmClient");
-            client.BaseAddress = new Uri(payload.UrlOrigem);
+
+            var urlOrigem = payload.UrlOrigem.TrimEnd('/') + '/';
+            client.BaseAddress = new Uri(urlOrigem);
             client.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("bearer", payload.TokenSistema);
+                new AuthenticationHeaderValue("Bearer", payload.TokenSistema);
 
             return client;
         }
@@ -77,17 +79,19 @@ namespace EcmProxy.Services
 
         private async Task<Anexo> GetUrlPathAnexoAsync(HttpClient client, TokenPayload payload, Anexo anexo, CancellationToken ct)
         {
-            var response = await client.GetAsync($"/api/v2/anexo/{anexo.Id}/path", ct);
+            var response = await client.GetAsync($"api/v2/anexo/{anexo.Id}/path", ct);
 
             if (!response.IsSuccessStatusCode)
                 throw new ProxyException((int)response.StatusCode, anexo.Id);
 
-            var result = await response.Content.ReadFromJsonAsync<Anexo>(ct) ??
+            var result = await response.Content.ReadFromJsonAsync<RespostaUrlAnexo>(ct) ??
                 throw new ProxyException(204, anexo.Id);
 
-            anexo.CaminhoUrl = result.CaminhoUrl;
-            
+            anexo.CaminhoUrl = result.UrlFile;
+
             return anexo;
         }
+
+        private record RespostaUrlAnexo([property: System.Text.Json.Serialization.JsonPropertyName("urlFile")] string UrlFile);
     }
 }

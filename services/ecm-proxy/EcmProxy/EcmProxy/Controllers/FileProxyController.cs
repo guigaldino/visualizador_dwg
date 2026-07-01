@@ -2,6 +2,7 @@
 using EcmProxy.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 
 namespace EcmProxy.Controllers
 {
@@ -32,8 +33,12 @@ namespace EcmProxy.Controllers
             var payload = _tokenService.Descriptografar(token);
             var resultado = await _fileProxyService.ObterStreamsArquivoAsync(payload, anexoId, cancellationToken);
 
-            if(resultado.ContentDisposition is not null)
-                Response.Headers.Append("Content-Disposition", resultado.ContentDisposition);
+            if (resultado.NomeArquivo is not null)
+            {
+                var cd = new ContentDispositionHeaderValue("inline");
+                cd.SetHttpFileName(resultado.NomeArquivo);
+                Response.Headers.ContentDisposition = cd.ToString();
+            }
 
             return File(resultado.Content, resultado.ContentType);
         }
