@@ -43,7 +43,7 @@ namespace EcmProxyTests.Unit
             TokenSistema = "token-ecm-valido",
             UrlOrigem = "http://ecm-fake",
             IdUsuario = "usuario-01",
-            TempoExpiracao = DateTime.UtcNow.AddHours(1)
+            TempoExpiracao = DateTime.Now.AddHours(1)
         };
 
         [Fact]

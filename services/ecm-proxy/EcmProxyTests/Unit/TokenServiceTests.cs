@@ -19,9 +19,9 @@ namespace EcmProxyTests.Unit
 
         private readonly TokenOptions _opcoesPadrao = new()
         {
-            ChaveAes = "chave-teste-123",
-            ChaveSalt = "salt-teste-456",
-            Iteracao = 1000,
+            ChaveAes = TokenTestHelper.ChaveAes,
+            ChaveSalt = TokenTestHelper.ChaveSalt,
+            Iteracao = TokenTestHelper.Iteracoes,
             ClockSkewSegundos = 0
         };
 
@@ -41,7 +41,7 @@ namespace EcmProxyTests.Unit
                 TokenSistema = "bearer-ecm-123",
                 UrlOrigem = "https://ecm.exemplo.com",
                 IdUsuario = "usuario-01",
-                TempoExpiracao = DateTime.UtcNow.AddHours(1)
+                TempoExpiracao = DateTime.Now.AddHours(1)
             };
 
             var token = TokenTestHelper.CriptografarToken(payloadEsperado);
@@ -64,7 +64,7 @@ namespace EcmProxyTests.Unit
             var payloadExpirado = new TokenPayload
             {
                 IdDocumento = 1,
-                TempoExpiracao = DateTime.UtcNow.AddHours(-1)
+                TempoExpiracao = DateTime.Now.AddHours(-1)
             };
 
             var token = TokenTestHelper.CriptografarToken(payloadExpirado);
@@ -88,7 +88,7 @@ namespace EcmProxyTests.Unit
         public void Descriptografar_BytesCorretos_ChaveErrada_LancaTokenInvalidException()
         {
             // Arrange
-            var payload = new TokenPayload { IdDocumento = 1, TempoExpiracao = DateTime.UtcNow.AddHours(1) };
+            var payload = new TokenPayload { IdDocumento = 1, TempoExpiracao = DateTime.Now.AddHours(1) };
             var token = TokenTestHelper.CriptografarToken(payload);
 
             var opcoesChaveErrada = new TokenOptions
@@ -118,7 +118,7 @@ namespace EcmProxyTests.Unit
 
             using var aes = Aes.Create();
             aes.Key = keyBytes;
-            aes.IV = keyBytes;
+            aes.IV = Encoding.UTF8.GetBytes(_opcoesPadrao.ChaveSalt);
             aes.Mode = CipherMode.CBC;
             aes.Padding = PaddingMode.PKCS7;
 

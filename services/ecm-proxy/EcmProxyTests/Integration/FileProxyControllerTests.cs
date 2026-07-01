@@ -44,7 +44,7 @@ namespace EcmProxyTests.Integration
             TokenSistema = "token-ecm-valido",
             UrlOrigem = "http://ecm-fake",
             IdUsuario = "usuario-01",
-            TempoExpiracao = expiracao ?? DateTime.UtcNow.AddHours(1)
+            TempoExpiracao = expiracao ?? DateTime.Now.AddHours(1)
         };
 
         [Fact]
@@ -109,7 +109,7 @@ namespace EcmProxyTests.Integration
             // Arrange
             var mockServico = new Mock<IFileProxyService>();
             var tokenExpirado = TokenTestHelper.CriptografarToken(
-                CriarPayload(expiracao: DateTime.UtcNow.AddHours(-1)));
+                CriarPayload(expiracao: DateTime.Now.AddHours(-1)));
             var cliente = CriarCliente(mockServico);
 
             // Act
