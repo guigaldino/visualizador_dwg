@@ -61,7 +61,8 @@ namespace EcmProxy.Services
 
         private static readonly JsonSerializerOptions _opcoesJson = new()
         {
-            PropertyNameCaseInsensitive = true
+            PropertyNameCaseInsensitive = true,
+            NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowReadingFromString
         };
 
         private string DescriptografarAes(byte[] bytesCriptografados)
