@@ -19,6 +19,9 @@ namespace EcmProxy.Services
 
         public TokenPayload Descriptografar(string tokenCriptografado)
         {
+            // '+' em Base64 vira espaço quando decodificado de query string sem %2B
+            tokenCriptografado = tokenCriptografado.Replace(' ', '+');
+
             byte[] bytesCriptografados;
             try
             {
